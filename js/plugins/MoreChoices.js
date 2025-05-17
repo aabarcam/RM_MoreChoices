@@ -7,6 +7,7 @@
  * @target MZ
  * @plugindesc Automatically joins adjacent [Show Choices...] commands into a single list of choices.
  * @author Pwino
+ * @url https://github.com/aabarcam/RM_MoreChoices
  *
  * @help MoreChoices
  *
