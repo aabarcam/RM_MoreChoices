@@ -70,13 +70,31 @@
 
         // nextCommand starts as 102 command
         while (nextCommand.code === 102) {
+
+            // I hope this doesn't break compatibility
+            if (thisCommand.chosenCancel) {
+                cancelType = thisCommand.chosenCancel;
+            }
+
+            if (thisCommand.chosenDefault) {
+                defaultType = thisCommand.chosenDefault;
+            }
+
             // join all 102 parameters and set intermediate 102 for delete
             if (nextCommandId !== this._index) {
                 deleteIds.push(nextCommandId - 1);
                 deleteIds.push(nextCommandId);
 
-                cancelType = chooseCancelType(cancelType, nextCommand.parameters[1], choices.length);
-                defaultType = chooseDefaultType(defaultType, nextCommand.parameters[2], choices.length);
+                if (!thisCommand.chosenCancel) {
+                    cancelType = chooseCancelType(cancelType, nextCommand.parameters[1], choices.length);
+                    this._list[this._index].chosenCancel = cancelType;
+                }
+
+                if (!thisCommand.chosenDefault) {
+                    defaultType = chooseDefaultType(defaultType, nextCommand.parameters[2], choices.length);
+                    this._list[this._index].chosenDefault = defaultType;
+                }
+
             }
 
             nextCommandId = this.nextEqualIndentCommandId(nextCommandId);
@@ -107,7 +125,7 @@
         for (let idx = deleteIds.length - 1; idx >= 0; idx--) {
             this._list.splice(deleteIds[idx], 1);
         }
-        return [ choices, cancelType, defaultType, positionType, background ];
+        return [choices, cancelType, defaultType, positionType, background];
     }
 
     Game_Interpreter.prototype.nextEqualIndentCommandId = function (commandId) {

@@ -9,4 +9,4 @@ Download the file "[MoreChoices.js](https://github.com/aabarcam/RM_MoreChoices/c
 ## Compatibility
 Developed and tested for RPG Maker MZ.
 
-Compatibility with RPG Maker MV unknown.
+Compatibility with RPG Maker MV or other MZ plugins untested.
