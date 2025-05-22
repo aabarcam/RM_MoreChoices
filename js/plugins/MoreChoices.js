@@ -54,7 +54,7 @@
     // If multiple cancel branches found only first stays
     Game_Interpreter.prototype.joinChoices = function (params) {
         // prevent event from being modified permanently
-        this._list = JSON.parse(JSON.stringify(this._list))
+        this._list = JSON.parse(JSON.stringify(this._list));
         let choices = params[0].clone();
         let cancelType = params[1];
         let defaultType = params[2];
@@ -77,7 +77,6 @@
 
                 cancelType = chooseCancelType(cancelType, nextCommand.parameters[1], choices.length);
                 defaultType = chooseDefaultType(defaultType, nextCommand.parameters[2], choices.length);
-                choices = choices.concat(nextCommand.parameters[0].clone());
             }
 
             nextCommandId = this.nextEqualIndentCommandId(nextCommandId);
@@ -88,6 +87,8 @@
                 if (nextCommand.code === 403) {
                     if (foundCancelBranch) deleteIds.push(nextCommandId);
                     foundCancelBranch = true;
+                } else if (choicesCount >= thisCommand.parameters[0].length) {
+                    choices.push(nextCommand.parameters[1]);
                 }
                 nextCommand.parameters[0] = choicesCount++;
                 nextCommandId = this.nextEqualIndentCommandId(nextCommandId);
